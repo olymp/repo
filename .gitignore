@@ -41,3 +41,6 @@ flow-coverage/
 _old
 _apps
 lib
+
+.hera
+/package.json

@@ -1,5 +1,5 @@
 {
-  "name": "react-universally",
+  "name": "@olymp/zeus-demo",
   "version": "7.2.0",
   "description": "A starter kit giving you the minimum requirements for a production ready universal react application.",
   "main": "build/server/main.js",
@@ -7,14 +7,11 @@
     "node": "~6.9.1"
   },
   "scripts": {
-    "clean": "./node_modules/@bkniffler/react-universally-dev/node_modules/.bin/rimraf build",
-    "development": "node ./node_modules/@bkniffler/react-universally/tools/development",
-    "build": "npm run clean && ./node_modules/@bkniffler/react-universally-dev/node_modules/.bin/webpack --config ./node_modules/@bkniffler/react-universally/tools/webpack/client.config.js && ./node_modules/@bkniffler/react-universally-dev/node_modules/.bin/webpack --config ./node_modules/@bkniffler/react-universally/tools/webpack/universalMiddleware.config.js && ./node_modules/@bkniffler/react-universally-dev/node_modules/.bin/webpack --config ./node_modules/@bkniffler/react-universally/tools/webpack/server.config.js",
-    "start": "node build/server",
-    "lint": "eslint src",
-    "typecheck": "flow",
-    "typereport": "flow-coverage-report -i 'src/**/*.js' -t html -t json -t text",
-    "removetypes": "node ./node_modules/@bkniffler/react-universally/tools/flow/removeTypes.js && eslint --fix src"
+    "clean-all": "rm -rf ./build && rm -rf ./.happypack",
+    "clean": "rm -rf ./build",
+    "development": "node dev",
+    "build": "npm run clean && node build.js",
+    "start": "node index"
   },
   "repository": {
     "type": "git",
@@ -36,10 +33,7 @@
   },
   "homepage": "https://github.com/ctrlplusb/react-universally#readme",
   "dependencies": {
-    "@bkniffler/react-universally": "^7.2.2",
-    "rimraf": "^2.5.4"
   },
   "devDependencies": {
-    "@bkniffler/react-universally-dev": "^7.2.2"
   }
 }

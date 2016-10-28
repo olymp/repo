@@ -29,6 +29,6 @@ module.exports = class SymlinkTask {
     return this.linkModules().then(this.linkPackages);
   }
   unlink() {
-    return exec(`find ${this.packages.node_modules} -maxdepth 1 -type l -exec rm -f {} \;`);
+    return exec(`find ${this.packages.node_modules} -maxdepth 1 -type l -exec rm -f {} \;`).then(x => exec(`find ${this.packages.node_modules} -maxdepth 2 -type l -exec rm -f {} \;`));
   }
 };

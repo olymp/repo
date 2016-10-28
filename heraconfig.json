@@ -1,6 +1,9 @@
 {
   "packages": [
     "./adonis",
-    "./athena"
+    "./apollo",
+    "./athena",
+    "./hera",
+    "./zeus"
   ]
 }

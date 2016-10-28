@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const appRootPath = require('app-root-path').toString();
+const appRootPath = require('app-root-dir').get();
 const WebpackMd5Hash = require('webpack-md5-hash');
 
 const { removeEmpty, ifElse, merge, happyPackPlugin } = require('../utils');

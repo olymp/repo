@@ -39,7 +39,7 @@
     }
     if (!fs.existsSync(heraPath)) {
       if (fs.existsSync(path.resolve(root, 'hera'))){
-        heraPath = path.resolve(root, 'hera');
+        heraPath = path.resolve(root, 'hera', 'index.js');
       } else {
         return console.error('Could not find hera installed in node_modules');
       }

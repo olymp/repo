@@ -3,9 +3,9 @@
 const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
-const appRoot = require('app-root-path');
+const appRoot = require('app-root-dir');
 
-const appRootPath = appRoot.toString();
+const appRootPath = appRoot.get();
 
 // This is to support deployment to the "now" host.  See the README for more info.
 const envFile = process.env.NOW

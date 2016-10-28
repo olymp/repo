@@ -27,7 +27,6 @@
     "react-portal": "^2.2.1",
     "react-select": "^1.0.0-rc.2",
     "react-sortable-hoc": "^0.1.0",
-    "reactstrap": "^3.6.0",
-    "slate-mate": "^0.1.3"
+    "reactstrap": "^3.6.0"
   }
 }
