@@ -1,0 +1,82 @@
+#!/usr/bin/env node
+;(function () { // wrapper in case we're in module_context mode
+  // windows: running "npm blah" in this folder will invoke WSH, not node.
+  /*global WScript*/
+  if (typeof WScript !== 'undefined') {
+    WScript.echo(
+      'npm does not work when run\n' +
+      'with the Windows Scripting Host\n\n' +
+      "'cd' to a different directory,\n" +
+      "or type 'npm.cmd <args>',\n" +
+      "or type 'node npm <args>'."
+    )
+    WScript.quit(1)
+    return
+  }
+
+  process.title = 'hera';
+  var root = process.cwd();
+  var isPackage = false;
+  var fs = require('fs');
+  var path = require('path');
+  var configrcPath = path.resolve(root, '.hera');
+  var packageJsonPath = path.resolve(root, 'package.json');
+  if (fs.existsSync(configrcPath)) {
+    root = JSON.parse(fs.readFileSync(configrcPath)).root || root;
+    isPackage = JSON.parse(fs.readFileSync(packageJsonPath));
+  }
+  var configPath = path.resolve(root, 'heraconfig.json');
+
+  if (fs.existsSync(configPath)) {
+    var config = require(configPath);
+    var heraPath = path.resolve(root, 'node_modules', 'hera');
+    if (config.packages) {
+      var heraAliasPath = config.packages.filter(x => x.endsWith('/hera'))[0];
+      if (heraAliasPath) {
+        heraPath = heraAliasPath.indexOf('.') === 0 ? path.resolve(root, heraAliasPath) : heraAliasPath;
+        console.log('Using hera from ' + heraPath);
+      }
+    }
+    if (!fs.existsSync(heraPath)) {
+      if (fs.existsSync(path.resolve(root, 'hera'))){
+        heraPath = path.resolve(root, 'hera');
+      } else {
+        return console.error('Could not find hera installed in node_modules');
+      }
+    }
+    var hera = require(heraPath)();
+    var args = process.argv.slice(2);
+    if (args && args[0]){
+      hera.execute(args[0], {
+        root: root, package: isPackage ? isPackage.name : null
+      });
+    } else {
+      console.log(`
+  Usage,
+    $ hera [command]
+
+  Commands:
+    - General
+    init      *** to do ***
+    - Symlinks
+    link      Link packages node_modules to @root/node_modules and @root/node_modules/package to package
+    unlink    Unlink all @root/node_modules/*
+    - Git
+    push      Git push to remote
+    - Npm
+    publish   Npm publish a package as patch/minor/major
+    install   Npm install (everything or a specific package)
+    remove    Npm remove a specific package
+    - Building
+    watch     Watch src/**/*.* and auto-build
+    build     Build src/**/*.*
+
+  Options:
+    --root, -r    Root directory, default process.cwd
+    --config, -c  Config file path, default @root/hera.json
+      `)
+    }
+  } else {
+    console.error('Could not find hera.json in folder');
+  }
+})()
