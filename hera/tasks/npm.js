@@ -71,7 +71,7 @@ module.exports = class NpmTask {
       { type: 'list', name: 'type', message: 'Select the publish type', choices: ['patch', 'minor', 'major'] },
     ]).then(answers => {
       const bump = pack => exec(`npm version ${answers.type} --force`, pack.dir);
-      const publish = pack => exec('npm publish', pack.dir);
+      const publish = pack => exec('npm publish access=public', pack.dir);
 
       console.log(`Publishing ${chalk.yellow(answers.package)} as ${chalk.green(answers.type)}  ...`);
       return Promise.all(this.packages.groups[answers.package].map(bump))
